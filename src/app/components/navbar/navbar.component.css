@@ -1,0 +1,144 @@
+/* Tema Dark - Berserk + Star Wars */
+
+
+/* Botão Hamburger */
+.hamburger-btn {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  position: relative;
+  z-index: 60;
+}
+
+.line {
+  width: 28px;
+  height: 3px;
+  background: white;
+  border-radius: 3px;
+  transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  position: absolute;
+}
+
+.line-1 {
+  transform: translateY(-8px);
+}
+
+.line-2 {
+  transform: translateY(0);
+}
+
+.line-3 {
+  transform: translateY(8px);
+}
+
+.hamburger-btn.active .line-1 {
+  transform: rotate(45deg) translateY(0);
+}
+
+.hamburger-btn.active .line-2 {
+  opacity: 0;
+  transform: translateX(20px);
+}
+
+.hamburger-btn.active .line-3 {
+  transform: rotate(-45deg) translateY(0);
+}
+
+.hamburger-btn:hover .line {
+  background: rgba(220, 20, 60, 0.9);
+}
+
+/* Modal */
+.menu-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.92);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.3s ease-out;
+  padding-top: 80px;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.menu-content {
+  width: 90%;
+  max-width: 500px;
+  animation: slideUp 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.menu-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 1rem;
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.1rem 10px;
+  background: rgba(20, 20, 30, 0.8);
+  border: 2px solid rgba(139, 0, 0, 0.4);
+  border-radius: 8px;
+  text-decoration: none;
+  color: rgba(255, 255, 255, 0.95);
+  font-size: 1.25rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+}
+
+.menu-item:hover {
+  transform: scale(1.05);
+  background: rgba(30, 30, 45, 0.95);
+  border-color: rgba(220, 20, 60, 0.8);
+  box-shadow: 0 8px 32px rgba(220, 20, 60, 0.5),
+              inset 0 0 20px rgba(220, 20, 60, 0.1);
+  color: rgba(220, 20, 60, 0.95);
+}
+
+.menu-number {
+  font-family: 'Courier New', monospace;
+  font-size: 1rem;
+  color: rgba(255, 182, 193, 0.9);
+  font-weight: 600;
+}
+
+.menu-text {
+  text-align: center;
+  width: 100%;
+}
