@@ -288,10 +288,8 @@
 
 .skills-track::before {
   left: -20px;
-  background: linear-gradient(90deg, rgba(17, 24, 39, 1) 0%, rgba(17, 24, 39, 0) 100%);
 }
 
 .skills-track::after {
   right: -20px;
-  background: linear-gradient(270deg, rgba(17, 24, 39, 1) 0%, rgba(17, 24, 39, 0) 100%);
 }
