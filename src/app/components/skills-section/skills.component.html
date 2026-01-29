@@ -11,10 +11,26 @@
     </div>
 
     <!-- Horizontal Scrolling Carousel -->
-    <div class="relative w-full h-40 md:h-48 overflow-hidden">
+    <div #trackContainer 
+         class="relative w-full h-40 md:h-48 overflow-hidden cursor-grab active:cursor-grabbing"
+         (mousedown)="onMouseDown($event)"
+         (mousemove)="onMouseMove($event)"
+         (mouseup)="onMouseUp()"
+         (mouseleave)="onMouseLeave()"
+         (touchstart)="onTouchStart($event)"
+         (touchmove)="onTouchMove($event)"
+         (touchend)="onTouchEnd()">
+      
+      <!-- Navigation Hint -->
+      <div class="navigation-hint">
+        <span>← Arraste para navegar →</span>
+      </div>
       
       <!-- Track Container -->
-      <div class="skills-track flex absolute top-0 left-0 h-full">
+      <div #skillsTrack 
+           class="skills-track flex absolute top-0 left-0 h-full"
+           (mouseenter)="pauseAnimation()"
+           (mouseleave)="resumeAnimation()">
         
         <!-- First Set of Cards -->
         <div class="skill-card-wrapper">
