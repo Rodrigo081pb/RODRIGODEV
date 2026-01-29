@@ -3,11 +3,13 @@ import { CommonModule } from '@angular/common';
 import { SkillsComponent } from '../../components/skills-section/skills.component';
 import { ExperienceComponent } from '../../components/experience-section/experience.component';
 import { AboutSectionComponent } from '../../components/about-section/about-section.component';
+import { CertificationsSection } from '../../components/certifications-section/certifications-section';
+
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, SkillsComponent, ExperienceComponent, AboutSectionComponent],
+  imports: [CommonModule, SkillsComponent, ExperienceComponent, AboutSectionComponent, CertificationsSection],
   templateUrl: './home-section.html',
   styleUrls: ['./home-section.css']
 })

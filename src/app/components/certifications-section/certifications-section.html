@@ -1,0 +1,100 @@
+<!-- Certifications Section - Star Wars / Berserk Inspired -->
+<section id="certifications" class="certifications-section w-full py-20 overflow-hidden relative">
+  
+  <!-- Background Effects -->
+  <div class="absolute inset-0 pointer-events-none">
+    <div class="stars"></div>
+    <div class="nebula"></div>
+  </div>
+
+  <div class="container mx-auto px-4 md:px-8 lg:px-16 relative z-10">
+    
+    <!-- Section Title -->
+    <div class="text-center mb-16">
+      <div class="title-container relative inline-block">
+        <!-- Glowing Lines -->
+        <div class="title-line left"></div>
+        <div class="title-line right"></div>
+        
+        <h2 class="text-5xl md:text-6xl font-bold text-white">
+            Certifications
+        </h2>
+      </div>
+      
+      <div class="mt-6 flex items-center justify-center gap-4">
+        <div class="h-px w-16 md:w-24 bg-gradient-to-r from-transparent to-cyan-500"></div>
+        <div class="hex-icon">
+          <svg class="w-6 h-6 text-cyan-400" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 2L2 7v10l10 5 10-5V7L12 2zm0 18.5L4 16V8.5l8 4v8zm1-9.5L5 7l7-3.5L19 7l-6 4z"/>
+          </svg>
+        </div>
+        <div class="h-px w-16 md:w-24 bg-gradient-to-l from-transparent to-purple-500"></div>
+      </div>
+      
+      <p class="text-gray-400 mt-6 text-lg max-w-2xl mx-auto">
+        Certifications that changed my career
+      </p>
+    </div>
+
+    <!-- Certifications Grid -->
+    <div class="certifications-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+      
+      @for (cert of certifications(); track cert.id; let i = $index) {
+        <div 
+          class="certification-card group"
+          [style.animation-delay]="(i * 0.15) + 's'"
+          (click)="navigateToCertification(cert.credentialUrl)"
+        >
+          <!-- Card Glow Effect -->
+          <div class="card-glow"></div>
+          
+          <!-- Card Border Animation -->
+          <div class="card-border"></div>
+          
+          <!-- Card Content -->
+          <div class="card-inner">
+            
+            <!-- Badge/Image Section -->
+            <div class="badge-section">
+              <div class="badge-container">
+                <div class="badge-glow"></div>
+                <img 
+                  [src]="cert.badgeImage" 
+                  [alt]="cert.title"
+                  class="badge-image"
+                  loading="lazy"
+                >
+                <div class="badge-ring"></div>
+              </div>
+            </div>
+            
+            <!-- Info Section -->
+            <div class="info-section">
+              <h3 class="cert-title">{{ cert.title }}</h3>
+              
+              <div class="issuer-tag">
+                <span class="issuer-icon">◆</span>
+                {{ cert.issuer }}
+              </div>
+              
+              <!-- Footer -->
+              <div class="card-footer">
+                <span class="view-credential">
+                  View Credential
+                  <svg class="w-4 h-4 inline ml-1 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                  </svg>
+                </span>
+              </div>
+            </div>
+            
+            <!-- Holographic Overlay -->
+            <div class="holographic-overlay"></div>
+          </div>
+        </div>
+      }
+      
+    </div>
+    
+  </div>
+</section>
