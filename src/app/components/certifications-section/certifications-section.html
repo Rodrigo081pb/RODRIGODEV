@@ -39,7 +39,7 @@
     <!-- Certifications Grid -->
     <div class="certifications-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
       
-      @for (cert of certifications(); track cert.id; let i = $index) {
+      @for (cert of visibleCertifications; track cert.id; let i = $index) {
         <div 
           class="certification-card group"
           [style.animation-delay]="(i * 0.15) + 's'"
@@ -73,7 +73,6 @@
               <h3 class="cert-title">{{ cert.title }}</h3>
               
               <div class="issuer-tag">
-                <span class="issuer-icon">◆</span>
                 {{ cert.issuer }}
               </div>
               
@@ -95,6 +94,45 @@
       }
       
     </div>
+
+    <!-- Ver Mais / Ver Menos Button -->
+    @if (hasMore || isExpanded) {
+      <div class="flex justify-center mt-12">
+        @if (hasMore) {
+          <button 
+            class="cyber-button" 
+            (click)="showMore()"
+            type="button"
+          >
+            <span class="button-content">
+              <span class="button-text">Ver Mais</span>
+              <svg class="button-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+              </svg>
+            </span>
+            <span class="button-glow"></span>
+            <span class="button-particles"></span>
+          </button>
+        }
+        
+        @if (isExpanded && !hasMore) {
+          <button 
+            class="cyber-button" 
+            (click)="showLess()"
+            type="button"
+          >
+            <span class="button-content">
+              <span class="button-text">Ver Menos</span>
+              <svg class="button-icon rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+              </svg>
+            </span>
+            <span class="button-glow"></span>
+            <span class="button-particles"></span>
+          </button>
+        }
+      </div>
+    }
     
   </div>
 </section>
