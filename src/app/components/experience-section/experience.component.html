@@ -66,8 +66,17 @@
                 <div class="relative z-10">
                   <div class="flex items-start justify-between mb-4">
                     <div>
+                      <!-- Promoted Badge -->
+                      @if (exp.positions && exp.positions.length > 1) {
+                        <div class="promoted-badge inline-flex items-center gap-1.5 px-3 py-1 bg-gradient-to-r from-green-500/20 to-emerald-500/20 text-green-400 text-xs font-semibold rounded-full border border-green-500/30 mb-2">
+                          <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M12 7a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0V8.414l-4.293 4.293a1 1 0 01-1.414 0L8 10.414l-4.293 4.293a1 1 0 01-1.414-1.414l5-5a1 1 0 011.414 0L11 10.586 14.586 7H12z" clip-rule="evenodd"/>
+                          </svg>
+                          Promoted
+                        </div>
+                      }
                       <h3 class="text-xl md:text-2xl font-bold text-white group-hover:text-purple-400 transition-colors duration-300">
-                        {{ exp.role }}
+                        {{ exp.positions && exp.positions.length > 0 ? exp.positions[0].role : exp.role }}
                       </h3>
                       <div class="flex items-center gap-2 mt-1">
                         <span class="text-purple-400 font-medium">{{ exp.company }}</span>
@@ -102,16 +111,35 @@
                       </svg>
                       <span>{{ exp.year }} {{ exp.endYear ? '- ' + exp.endYear : '- Current' }}</span>
                     </div>
+                    @if (exp.positions && exp.positions.length > 1) {
+                      <div class="flex items-center gap-1 text-green-400">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+                        </svg>
+                        <span>{{ exp.positions.length }} positions</span>
+                      </div>
+                    }
                   </div>
 
-                  <!-- Description -->
+                  <!-- Description (show current position description or main description) -->
                   <p class="text-gray-300 leading-relaxed mb-4">
-                    {{ exp.description }}
+                    {{ exp.positions && exp.positions.length > 0 ? exp.positions[0].description : exp.description }}
                   </p>
 
-                  <!-- Technologies Preview -->
+                  <!-- Technologies Preview (show current position technologies) -->
                   <div class="flex flex-wrap gap-2">
-                    @if (exp.technologies && exp.technologies.length > 0) {
+                    @if (exp.positions && exp.positions.length > 0 && exp.positions[0].technologies.length > 0) {
+                      @for (tech of exp.positions[0].technologies.slice(0, 4); track tech.name) {
+                        <span class="tech-tag px-3 py-1 bg-purple-500/10 text-purple-400 text-xs font-medium rounded-full border border-purple-500/20 hover:bg-purple-500/20 transition-colors duration-300">
+                          {{ tech.name }}
+                        </span>
+                      }
+                      @if (exp.positions[0].technologies.length > 4) {
+                        <span class="px-3 py-1 bg-gray-700/50 text-gray-400 text-xs font-medium rounded-full">
+                          +{{ exp.positions[0].technologies.length - 4 }}
+                        </span>
+                      }
+                    } @else if (exp.technologies && exp.technologies.length > 0) {
                       @for (tech of exp.technologies.slice(0, 4); track tech.name) {
                         <span class="tech-tag px-3 py-1 bg-purple-500/10 text-purple-400 text-xs font-medium rounded-full border border-purple-500/20 hover:bg-purple-500/20 transition-colors duration-300">
                           {{ tech.name }}
@@ -130,59 +158,163 @@
                 <div class="expandable-content overflow-hidden transition-all duration-500" [class.expanded]="isExpanded(exp.id)" (click)="$event.stopPropagation()">
                   <div class="pt-6 mt-6 border-t border-gray-700/50">
                     
-                    <!-- Activities -->
-                    <div class="mb-6">
-                      <h4 class="flex items-center gap-2 text-white font-semibold mb-3">
-                        <svg class="w-5 h-5 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
-                        </svg>
-                        Activities
-                      </h4>
-                      <ul class="space-y-2">
-                        @for (activity of exp.activities; track activity) {
-                          <li class="flex items-start gap-3 text-gray-300 text-sm">
-                            <span class="w-1.5 h-1.5 rounded-full bg-purple-500 mt-2 flex-shrink-0"></span>
-                            {{ activity }}
-                          </li>
-                        }
-                      </ul>
-                    </div>
+                    <!-- Positions Timeline (when there are multiple positions) -->
+                    @if (exp.positions && exp.positions.length > 0) {
+                      <div class="positions-timeline space-y-8">
+                        @for (position of exp.positions; track position.role; let posIndex = $index) {
+                          <div class="position-item relative" [class.border-l-2]="exp.positions.length > 1" [class.border-green-500/30]="exp.positions.length > 1" [class.pl-6]="exp.positions.length > 1" [class.ml-2]="exp.positions.length > 1">
+                            
+                            <!-- Position Dot -->
+                            @if (exp.positions.length > 1) {
+                              <div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full" [class.bg-green-500]="position.current" [class.bg-gray-600]="!position.current">
+                                @if (position.current) {
+                                  <div class="absolute inset-0 bg-green-500 rounded-full animate-ping opacity-50"></div>
+                                }
+                              </div>
+                            }
+                            
+                            <!-- Position Header -->
+                            <div class="position-header mb-4">
+                              <div class="flex items-center gap-3 flex-wrap">
+                                <h5 class="text-lg font-semibold" [class.text-green-400]="position.current" [class.text-white]="!position.current">
+                                  {{ position.role }}
+                                </h5>
+                                @if (position.current) {
+                                  <span class="current-badge px-2 py-0.5 bg-green-500/20 text-green-400 text-xs font-medium rounded-full border border-green-500/30">
+                                    Current
+                                  </span>
+                                }
+                              </div>
+                              <div class="flex items-center gap-2 text-sm text-gray-400 mt-1">
+                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                                </svg>
+                                <span>{{ position.startYear }} {{ position.endYear ? '- ' + position.endYear : '- Current' }}</span>
+                              </div>
+                            </div>
 
-                    <!-- Skills -->
-                    <div class="mb-6">
-                      <h4 class="flex items-center gap-2 text-white font-semibold mb-3">
-                        <svg class="w-5 h-5 text-pink-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
-                        </svg>
-                        Skills
-                      </h4>
-                      <div class="flex flex-wrap gap-2">
-                        @for (skill of exp.skills; track skill) {
-                          <span class="skill-tag px-3 py-1.5 bg-pink-500/10 text-pink-400 text-sm font-medium rounded-lg border border-pink-500/20">
-                            {{ skill }}
-                          </span>
+                            <!-- Position Description -->
+                            @if (posIndex > 0) {
+                              <p class="text-gray-300 text-sm leading-relaxed mb-4">
+                                {{ position.description }}
+                              </p>
+                            }
+                            
+                            <!-- Position Activities -->
+                            <div class="mb-4">
+                              <h6 class="flex items-center gap-2 text-white font-semibold mb-3 text-sm">
+                                <svg class="w-4 h-4 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
+                                </svg>
+                                Activities
+                              </h6>
+                              <ul class="space-y-2">
+                                @for (activity of position.activities; track activity) {
+                                  <li class="flex items-start gap-3 text-gray-300 text-sm">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-purple-500 mt-2 flex-shrink-0"></span>
+                                    {{ activity }}
+                                  </li>
+                                }
+                              </ul>
+                            </div>
+
+                            <!-- Position Skills -->
+                            <div class="mb-4">
+                              <h6 class="flex items-center gap-2 text-white font-semibold mb-3 text-sm">
+                                <svg class="w-4 h-4 text-pink-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                                </svg>
+                                Skills
+                              </h6>
+                              <div class="flex flex-wrap gap-2">
+                                @for (skill of position.skills; track skill) {
+                                  <span class="skill-tag px-3 py-1.5 bg-pink-500/10 text-pink-400 text-xs font-medium rounded-lg border border-pink-500/20">
+                                    {{ skill }}
+                                  </span>
+                                }
+                              </div>
+                            </div>
+
+                            <!-- Position Technologies -->
+                            <div>
+                              <h6 class="flex items-center gap-2 text-white font-semibold mb-3 text-sm">
+                                <svg class="w-4 h-4 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
+                                </svg>
+                                Technologies
+                              </h6>
+                              <div class="flex flex-wrap gap-2">
+                                @for (tech of position.technologies; track tech.name) {
+                                  <span class="tech-badge px-3 py-1.5 bg-gradient-to-r from-cyan-500/10 to-blue-500/10 text-cyan-400 text-xs font-medium rounded-lg border border-cyan-500/20 hover:from-cyan-500/20 hover:to-blue-500/20 transition-all duration-300">
+                                    {{ tech.name }}
+                                  </span>
+                                }
+                              </div>
+                            </div>
+
+                            <!-- Divider between positions -->
+                            @if (posIndex < exp.positions.length - 1) {
+                              <div class="mt-6 pt-6 border-t border-gray-700/30"></div>
+                            }
+                          </div>
                         }
                       </div>
-                    </div>
+                    } @else {
+                      <!-- Original layout for experiences without positions -->
+                      <!-- Activities -->
+                      <div class="mb-6">
+                        <h4 class="flex items-center gap-2 text-white font-semibold mb-3">
+                          <svg class="w-5 h-5 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
+                          </svg>
+                          Activities
+                        </h4>
+                        <ul class="space-y-2">
+                          @for (activity of exp.activities; track activity) {
+                            <li class="flex items-start gap-3 text-gray-300 text-sm">
+                              <span class="w-1.5 h-1.5 rounded-full bg-purple-500 mt-2 flex-shrink-0"></span>
+                              {{ activity }}
+                            </li>
+                          }
+                        </ul>
+                      </div>
 
-                    <!-- All Technologies -->
-                    <div>
-                      <h4 class="flex items-center gap-2 text-white font-semibold mb-3">
-                        <svg class="w-5 h-5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
-                        </svg>
-                        Technologies
-                      </h4>
-                      <div class="flex flex-wrap gap-2">
-                        @if (exp.technologies && exp.technologies.length > 0) {
-                          @for (tech of exp.technologies; track tech.name) {
-                            <span class="tech-badge px-4 py-2 bg-gradient-to-r from-cyan-500/10 to-blue-500/10 text-cyan-400 text-sm font-medium rounded-lg border border-cyan-500/20 hover:from-cyan-500/20 hover:to-blue-500/20 transition-all duration-300">
-                              {{ tech.name }}
+                      <!-- Skills -->
+                      <div class="mb-6">
+                        <h4 class="flex items-center gap-2 text-white font-semibold mb-3">
+                          <svg class="w-5 h-5 text-pink-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                          </svg>
+                          Skills
+                        </h4>
+                        <div class="flex flex-wrap gap-2">
+                          @for (skill of exp.skills; track skill) {
+                            <span class="skill-tag px-3 py-1.5 bg-pink-500/10 text-pink-400 text-sm font-medium rounded-lg border border-pink-500/20">
+                              {{ skill }}
                             </span>
                           }
-                        }
+                        </div>
                       </div>
-                    </div>
+
+                      <!-- All Technologies -->
+                      <div>
+                        <h4 class="flex items-center gap-2 text-white font-semibold mb-3">
+                          <svg class="w-5 h-5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
+                          </svg>
+                          Technologies
+                        </h4>
+                        <div class="flex flex-wrap gap-2">
+                          @if (exp.technologies && exp.technologies.length > 0) {
+                            @for (tech of exp.technologies; track tech.name) {
+                              <span class="tech-badge px-4 py-2 bg-gradient-to-r from-cyan-500/10 to-blue-500/10 text-cyan-400 text-sm font-medium rounded-lg border border-cyan-500/20 hover:from-cyan-500/20 hover:to-blue-500/20 transition-all duration-300">
+                                {{ tech.name }}
+                              </span>
+                            }
+                          }
+                        </div>
+                      </div>
+                    }
                   </div>
                 </div>
               </div>

@@ -6,6 +6,17 @@ interface Technology {
   icon?: string;
 }
 
+interface Position {
+  role: string;
+  startYear: string;
+  endYear?: string;
+  description: string;
+  activities: string[];
+  skills: string[];
+  technologies: Technology[];
+  current?: boolean;
+}
+
 interface Experience {
   id: number;
   year: string;
@@ -19,6 +30,7 @@ interface Experience {
   skills: string[];
   technologies: Technology[];
   current?: boolean;
+  positions?: Position[];
 }
 
 @Component({
@@ -33,65 +45,118 @@ export class ExperienceComponent {
     {
       id: 1,
       year: '2025',
-      role: 'Assoc, Full-Stack Development',
+      role: 'Junior Full-Stack Developer',
       company: 'Avanade',
       companyUrl: '',
       location: 'Recife, Brasil',
-      description: 'Development of a Python-based automation to extract, normalize, and consolidate JIRA data, enabling strategic visibility and risk tracking through Power BI dashboards and Development and maintenance of a legacy enterprise application using Java EE technologies, working in a full-stack role with strong focus on back-end systems.',
-      activities: [
-        'Developed and maintained enterprise applications using Java 7, JSF, Spring Framework, and Hibernate',
-        'Implemented business logic and integrated systems with mainframe environments',
-        'Developed user interfaces using JSP, RichFaces, and Ajax',
-        'Integrated applications with DB2 databases using Hibernate and JDBC',
-        'Consumed and exposed SOAP Web Services',
-        'Configured security layers using Spring Security',
-        'Managed build and deployment processes using Apache Ant on IBM WebSphere',
-        'Applied enterprise design patterns such as MVC, DAO, Service Layer, and Adapter',
-        'Maintained logging, reporting, and configuration across multiple environments',
-        'Developed a Python automation to extract data from JIRA using REST API and JQL',
-        'Implemented parallelized issue extraction with batching and caching to reduce latency and avoid timeouts',
-        'Parsed and normalized Sprint data (name, start, end, goal) with sprint calendar mapping',
-        'Modeled and processed data using pandas, including date normalization and business-day calculations',
-        'Implemented business rules and indicators for Blocks, Sub-Blocks, and Risks per sprint',
-        'Delivered Power BI-ready datasets with robust exception handling and fallback mechanisms',
-        'Collaborated with team members under technical leadership to ensure data quality and reliability'
-    
-      ],
-      skills: [
-        'Back-end Development',
-        'Data Analysis',
-        'Process Automation',
-        'Systems Integration',
-        'Problem Solving',
-        'Team Collaboration',
-        'Legacy Systems',
-        'Enterprise Architecture',
-        'System Integration',
-        'Software Maintenance'
-      ],
-      technologies: [
-        { name: 'Python' },
-        { name: 'pandas' },
-        { name: 'JIRA REST API' },
-        { name: 'JQL' },
-        { name: 'ThreadPoolExecutor' },
-        { name: 'Power BI' },
-        { name: 'Git' },
-        { name: 'Java 7' },
-        { name: 'Spring Framework' },
-        { name: 'Hibernate 3' },
-        { name: 'JSF 1.1' },
-        { name: 'IBM WebSphere 8.5' },
-        { name: 'DB2' },
-        { name: 'Apache Ant' },
-        { name: 'SOAP Web Services' },
-        { name: 'JSP' },
-        { name: 'RichFaces' },
-        { name: 'Log4j' },
-        { name: 'JasperReports' },
-        { name: 'COBOL Batch' }
-      ],
-      current: true
+      description: 'Full-stack development with modern technologies, focusing on clean architecture and best practices.',
+      activities: [],
+      skills: [],
+      technologies: [],
+      current: true,
+      positions: [
+        {
+          role: 'Junior Full-Stack Developer',
+          startYear: '03/2026',
+          description: 'Full-stack development with modern technologies, applying Hexagonal Architecture patterns and working with Angular on the front-end and Java on the back-end.',
+          activities: [
+            'Developing and maintaining full-stack applications using Angular for front-end',
+            'Building robust back-end services with Java 15, 17, and 21',
+            'Implementing Hexagonal Architecture (Ports and Adapters) for clean, maintainable code',
+            'Applying Domain-Driven Design principles and clean code practices',
+            'Working with RESTful APIs and microservices architecture',
+            'Collaborating with cross-functional teams in agile environment'
+          ],
+          skills: [
+            'Full-Stack Development',
+            'Front-end Development',
+            'Back-end Development',
+            'Clean Architecture',
+            'Hexagonal Architecture',
+            'Domain-Driven Design',
+            'Agile Methodologies',
+            'Team Collaboration'
+          ],
+          technologies: [
+            { name: 'Angular' },
+            { name: 'TypeScript' },
+            { name: 'Java 15' },
+            { name: 'Java 17' },
+            { name: 'Java 21' },
+            { name: 'Spring Boot' },
+            { name: 'Hexagonal Architecture' },
+            { name: 'RESTful APIs' },
+            { name: 'Git' }
+          ],
+          current: true
+        },
+        {
+          role: 'Assoc, Full-Stack Development',
+          startYear: '06/2025',
+          endYear: '03/2026',
+          description: 'Development of a Python-based automation to extract, normalize, and consolidate JIRA data, enabling strategic visibility and risk tracking through Power BI dashboards and Development and maintenance of a legacy enterprise application using Java EE technologies, working in a full-stack role with strong focus on back-end systems.',
+          activities: [
+            'Developed and maintained enterprise applications using Java 7, JSF, Spring Framework, and Hibernate',
+            'Implemented business logic and integrated systems with mainframe environments',
+            'Developed user interfaces using JSP, RichFaces, and Ajax',
+            'Integrated applications with DB2 databases using Hibernate and JDBC',
+            'Consumed and exposed SOAP Web Services',
+            'Configured security layers using Spring Security',
+            'Managed build and deployment processes using Apache Ant on IBM WebSphere',
+            'Applied enterprise design patterns such as MVC, DAO, Service Layer, and Adapter',
+            'Maintained logging, reporting, and configuration across multiple environments',
+            'Developed a Python automation to extract data from JIRA using REST API and JQL',
+            'Implemented parallelized issue extraction with batching and caching to reduce latency and avoid timeouts',
+            'Parsed and normalized Sprint data (name, start, end, goal) with sprint calendar mapping',
+            'Modeled and processed data using pandas, including date normalization and business-day calculations',
+            'Implemented business rules and indicators for Blocks, Sub-Blocks, and Risks per sprint',
+            'Delivered Power BI-ready datasets with robust exception handling and fallback mechanisms',
+            'Collaborated with team members under technical leadership to ensure data quality and reliability'
+          ],
+          skills: [
+            'Back-end Development',
+            'Front-end Development',
+            'Data Analysis',
+            'Process Automation',
+            'Systems Integration',
+            'Problem Solving',
+            'Team Collaboration',
+            'Legacy Systems',
+            'Enterprise Architecture',
+            'System Integration',
+            'Software Maintenance'
+          ],
+          technologies: [
+            { name: 'Python' },
+            { name: 'pandas' },
+            { name: 'JIRA REST API' },
+            { name: 'JQL' },
+            { name: 'ThreadPoolExecutor' },
+            { name: 'Power BI' },
+            { name: 'Git' },
+            { name: '.NET 8' },
+            { name: 'SQL SERVER' },
+            { name: 'Nest.js' },
+            { name: 'Java 7' },
+            { name: 'Java 8' },
+            { name: 'Java 17' },
+            { name: 'Java 21' },
+            { name: 'Spring Framework' },
+            { name: 'Hibernate 3' },
+            { name: 'JSF 1.1' },
+            { name: 'IBM WebSphere 8.5' },
+            { name: 'DB2' },
+            { name: 'Apache Ant' },
+            { name: 'SOAP Web Services' },
+            { name: 'JSP' },
+            { name: 'RichFaces' },
+            { name: 'Log4j' },
+            { name: 'JasperReports' },
+            { name: 'COBOL Batch' }
+          ],
+          current: false
+        }
+      ]
     },
     {
       id: 2,
