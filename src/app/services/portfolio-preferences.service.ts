@@ -98,7 +98,7 @@ export class PortfolioPreferencesService {
       skillsLabel: 'Habilidades',
       technologiesLabel: 'Tecnologias',
       aboutTitle: 'SOBRE MIM',
-      aboutIntro: 'Eu sou Kauã Rodrigo e, desde que comecei a estudar programa\u00E7\u00E3o, percebi como resolver desafios transformou minha vida pessoal e profissional. Por meio do c\u00F3digo, posso mudar n\u00E3o apenas a minha realidade, mas tamb\u00E9m a de todo o mundo.',
+      aboutIntro: 'Olá, sou Kauã Rodrigo e desde que comecei a estudar programa\u00E7\u00E3o, percebi como resolver desafios transformou minha vida pessoal e profissional. Por meio do c\u00F3digo, posso mudar n\u00E3o apenas a minha realidade, mas tamb\u00E9m a de todo o mundo.',
       aboutSecondary: 'Acredito que, assim como todo bom desenvolvedor que gosta de resolver problemas, tamb\u00E9m posso contribuir para um mundo melhor, mais conectado e inovador por meio da tecnologia.',
       birthday: 'Nascimento:',
       city: 'Cidade:',
