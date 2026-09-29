@@ -70,10 +70,10 @@
             
             <!-- Info Section -->
             <div class="info-section">
-              <h3 class="cert-title">{{ cert.title }}</h3>
+              <h3 class="cert-title">{{ preferences.content(cert.title) }}</h3>
               
               <div class="issuer-tag">
-                {{ cert.issuer }}
+                {{ preferences.content(cert.issuer) }}
               </div>
               
               <!-- Footer -->

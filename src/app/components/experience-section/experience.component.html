@@ -76,7 +76,7 @@
                         </div>
                       }
                       <h3 class="text-xl md:text-2xl font-bold text-white group-hover:text-purple-400 transition-colors duration-300">
-                        {{ exp.positions && exp.positions.length > 0 ? exp.positions[0].role : exp.role }}
+                        {{ preferences.content(exp.positions && exp.positions.length > 0 ? exp.positions[0].role : exp.role) }}
                       </h3>
                       <div class="flex items-center gap-2 mt-1">
                         <span class="text-purple-400 font-medium">{{ exp.company }}</span>
@@ -103,13 +103,13 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
                       </svg>
-                      <span>{{ exp.location }}</span>
+                      <span>{{ preferences.content(exp.location) }}</span>
                     </div>
                     <div class="flex items-center gap-1">
                       <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                       </svg>
-                      <span>{{ exp.year }} {{ exp.endYear ? '- ' + exp.endYear : '- Current' }}</span>
+                      <span>{{ exp.year }} {{ exp.endYear ? '- ' + exp.endYear : '- ' + preferences.text('current') }}</span>
                     </div>
                     @if (exp.positions && exp.positions.length > 1) {
                       <div class="flex items-center gap-1 text-green-400">
@@ -123,7 +123,7 @@
 
                   <!-- Description (show current position description or main description) -->
                   <p class="text-gray-300 leading-relaxed mb-4">
-                    {{ exp.positions && exp.positions.length > 0 ? exp.positions[0].description : exp.description }}
+                    {{ preferences.content(exp.positions && exp.positions.length > 0 ? exp.positions[0].description : exp.description) }}
                   </p>
 
                   <!-- Technologies Preview (show current position technologies) -->
@@ -131,7 +131,7 @@
                     @if (exp.positions && exp.positions.length > 0 && exp.positions[0].technologies.length > 0) {
                       @for (tech of exp.positions[0].technologies.slice(0, 4); track tech.name) {
                         <span class="tech-tag px-3 py-1 bg-purple-500/10 text-purple-400 text-xs font-medium rounded-full border border-purple-500/20 hover:bg-purple-500/20 transition-colors duration-300">
-                          {{ tech.name }}
+                          {{ preferences.content(tech.name) }}
                         </span>
                       }
                       @if (exp.positions[0].technologies.length > 4) {
@@ -142,7 +142,7 @@
                     } @else if (exp.technologies && exp.technologies.length > 0) {
                       @for (tech of exp.technologies.slice(0, 4); track tech.name) {
                         <span class="tech-tag px-3 py-1 bg-purple-500/10 text-purple-400 text-xs font-medium rounded-full border border-purple-500/20 hover:bg-purple-500/20 transition-colors duration-300">
-                          {{ tech.name }}
+                          {{ preferences.content(tech.name) }}
                         </span>
                       }
                       @if (exp.technologies.length > 4) {
@@ -177,7 +177,7 @@
                             <div class="position-header mb-4">
                               <div class="flex items-center gap-3 flex-wrap">
                                 <h5 class="text-lg font-semibold" [class.text-green-400]="position.current" [class.text-white]="!position.current">
-                                  {{ position.role }}
+                                  {{ preferences.content(position.role) }}
                                 </h5>
                                 @if (position.current) {
                                   <span class="current-badge px-2 py-0.5 bg-green-500/20 text-green-400 text-xs font-medium rounded-full border border-green-500/30">
@@ -189,14 +189,14 @@
                                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                                 </svg>
-                                <span>{{ position.startYear }} {{ position.endYear ? '- ' + position.endYear : '- Current' }}</span>
+                                <span>{{ position.startYear }} {{ position.endYear ? '- ' + position.endYear : '- ' + preferences.text('current') }}</span>
                               </div>
                             </div>
 
                             <!-- Position Description -->
                             @if (posIndex > 0) {
                               <p class="text-gray-300 text-sm leading-relaxed mb-4">
-                                {{ position.description }}
+                                {{ preferences.content(position.description) }}
                               </p>
                             }
                             
@@ -212,7 +212,7 @@
                                 @for (activity of position.activities; track activity) {
                                   <li class="flex items-start gap-3 text-gray-300 text-sm">
                                     <span class="w-1.5 h-1.5 rounded-full bg-purple-500 mt-2 flex-shrink-0"></span>
-                                    {{ activity }}
+                                    {{ preferences.content(activity) }}
                                   </li>
                                 }
                               </ul>
@@ -224,12 +224,12 @@
                                 <svg class="w-4 h-4 text-pink-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
                                 </svg>
-                                Skills
+                                {{ preferences.text('skillsLabel') }}
                               </h6>
                               <div class="flex flex-wrap gap-2">
                                 @for (skill of position.skills; track skill) {
                                   <span class="skill-tag px-3 py-1.5 bg-pink-500/10 text-pink-400 text-xs font-medium rounded-lg border border-pink-500/20">
-                                    {{ skill }}
+                                    {{ preferences.content(skill) }}
                                   </span>
                                 }
                               </div>
@@ -241,12 +241,12 @@
                                 <svg class="w-4 h-4 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
                                 </svg>
-                                Technologies
+                                {{ preferences.text('technologiesLabel') }}
                               </h6>
                               <div class="flex flex-wrap gap-2">
                                 @for (tech of position.technologies; track tech.name) {
                                   <span class="tech-badge px-3 py-1.5 bg-gradient-to-r from-cyan-500/10 to-blue-500/10 text-cyan-400 text-xs font-medium rounded-lg border border-cyan-500/20 hover:from-cyan-500/20 hover:to-blue-500/20 transition-all duration-300">
-                                    {{ tech.name }}
+                                    {{ preferences.content(tech.name) }}
                                   </span>
                                 }
                               </div>
@@ -267,13 +267,13 @@
                           <svg class="w-5 h-5 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
                           </svg>
-                          Activities
+                          {{ preferences.text('activities') }}
                         </h4>
                         <ul class="space-y-2">
                           @for (activity of exp.activities; track activity) {
                             <li class="flex items-start gap-3 text-gray-300 text-sm">
                               <span class="w-1.5 h-1.5 rounded-full bg-purple-500 mt-2 flex-shrink-0"></span>
-                              {{ activity }}
+                              {{ preferences.content(activity) }}
                             </li>
                           }
                         </ul>
@@ -285,12 +285,12 @@
                           <svg class="w-5 h-5 text-pink-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
                           </svg>
-                          Skills
+                          {{ preferences.text('skillsLabel') }}
                         </h4>
                         <div class="flex flex-wrap gap-2">
                           @for (skill of exp.skills; track skill) {
                             <span class="skill-tag px-3 py-1.5 bg-pink-500/10 text-pink-400 text-sm font-medium rounded-lg border border-pink-500/20">
-                              {{ skill }}
+                              {{ preferences.content(skill) }}
                             </span>
                           }
                         </div>
@@ -302,13 +302,13 @@
                           <svg class="w-5 h-5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
                           </svg>
-                          Technologies
+                          {{ preferences.text('technologiesLabel') }}
                         </h4>
                         <div class="flex flex-wrap gap-2">
                           @if (exp.technologies && exp.technologies.length > 0) {
                             @for (tech of exp.technologies; track tech.name) {
                               <span class="tech-badge px-4 py-2 bg-gradient-to-r from-cyan-500/10 to-blue-500/10 text-cyan-400 text-sm font-medium rounded-lg border border-cyan-500/20 hover:from-cyan-500/20 hover:to-blue-500/20 transition-all duration-300">
-                                {{ tech.name }}
+                                {{ preferences.content(tech.name) }}
                               </span>
                             }
                           }
