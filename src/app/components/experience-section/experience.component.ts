@@ -1,5 +1,6 @@
-import { Component, signal } from '@angular/core';
+﻿import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { PortfolioPreferencesService } from '../../services/portfolio-preferences.service';
 
 interface Technology {
   name: string;
@@ -41,6 +42,7 @@ interface Experience {
   styleUrls: ['./experience.component.css']
 })
 export class ExperienceComponent {
+  readonly preferences = inject(PortfolioPreferencesService);
   experiences = signal<Experience[]>([
     {
       id: 1,

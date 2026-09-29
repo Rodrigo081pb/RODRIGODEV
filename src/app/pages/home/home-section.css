@@ -1,4 +1,4 @@
-/* Estilos específicos do componente Home */
+﻿/* Estilos especÃ­ficos do componente Home */
 .home-container {
   min-height: 100vh;
 }
@@ -322,7 +322,7 @@
 }
 
 .project-image::before {
-  content: '🚀';
+  content: 'ðŸš€';
   position: absolute;
   top: 50%;
   left: 50%;

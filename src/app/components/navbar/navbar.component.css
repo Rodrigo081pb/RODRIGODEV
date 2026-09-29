@@ -1,7 +1,235 @@
-/* Tema Dark - Berserk + Star Wars */
+﻿/* Tema Dark - Berserk + Star Wars */
 
+.navbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
 
-/* Botão Hamburger */
+.translator-control {
+  position: relative;
+}
+
+.translator-btn {
+  min-height: 40px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 5px;
+  background: rgba(13, 17, 25, 0.78);
+  color: white;
+  cursor: pointer;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.translator-btn svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.8;
+}
+
+.translator-btn:hover,
+.translator-btn:focus-visible {
+  border-color: rgba(220, 20, 60, 0.9);
+  background: rgba(45, 20, 35, 0.95);
+  outline: none;
+}
+
+.translator-panel {
+  position: absolute;
+  top: calc(100% + 0.75rem);
+  right: 0;
+  width: 218px;
+  padding: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 6px;
+  background: rgba(10, 14, 22, 0.98);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.48);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-6px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.translator-panel-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.85rem;
+}
+
+.translator-panel.visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.translator-kicker {
+  display: block;
+  margin-bottom: 0.2rem;
+  color: rgba(248, 113, 113, 0.9);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.translator-title {
+  display: block;
+  color: rgba(255, 255, 255, 0.94);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.panel-close {
+  width: 28px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 4px;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.65);
+  cursor: pointer;
+  transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
+}
+
+.panel-close svg {
+  width: 15px;
+  height: 15px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-width: 2;
+}
+
+.panel-close:hover,
+.panel-close:focus-visible {
+  border-color: rgba(248, 113, 113, 0.65);
+  background: rgba(248, 113, 113, 0.1);
+  color: white;
+  outline: none;
+}
+
+.language-options {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.language-option {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.55rem 0.6rem;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.7);
+  cursor: pointer;
+  font-size: 0.78rem;
+  text-align: left;
+  transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
+}
+
+.language-option span:first-child {
+  min-width: 24px;
+  color: rgba(248, 113, 113, 0.95);
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+}
+
+.language-option:hover,
+.language-option:focus-visible,
+.language-option.selected {
+  border-color: rgba(248, 113, 113, 0.36);
+  background: rgba(248, 113, 113, 0.1);
+  color: white;
+  outline: none;
+}
+
+.theme-toggle-button {
+  min-height: 40px;
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.45rem 0.65rem;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 5px;
+  background: rgba(13, 17, 25, 0.78);
+  color: white;
+  cursor: pointer;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.theme-toggle-button:hover,
+.theme-toggle-button:focus-visible {
+  border-color: rgba(248, 113, 113, 0.36);
+  background: rgba(248, 113, 113, 0.1);
+  outline: none;
+}
+
+.theme-toggle-track {
+  width: 30px;
+  height: 16px;
+  position: relative;
+  display: inline-block;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: 999px;
+  background: #111827;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.theme-toggle-track.light-active {
+  border-color: #f59e0b;
+  background: #f59e0b;
+}
+
+.theme-toggle-knob {
+  width: 10px;
+  height: 10px;
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  border-radius: 50%;
+  background: #f8fafc;
+  transition: transform 0.2s ease;
+}
+
+.theme-toggle-track.light-active .theme-toggle-knob {
+  transform: translateX(14px);
+}
+
+@media (max-width: 480px) {
+  .translator-btn .control-label,
+  .theme-toggle-label {
+    display: none;
+  }
+
+  .translator-panel {
+    right: -2.75rem;
+  }
+}
+
+/* BotÃ£o Hamburger */
 .hamburger-btn {
   width: 40px;
   height: 40px;

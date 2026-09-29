@@ -1,4 +1,4 @@
-<!-- Certifications Section - Star Wars / Berserk Inspired -->
+﻿<!-- Certifications Section - Star Wars / Berserk Inspired -->
 <section id="certifications" class="certifications-section w-full py-20 overflow-hidden relative">
   
   <!-- Background Effects -->
@@ -12,16 +12,16 @@
     <!-- Section Title -->
     <div class="text-center mb-16">
       <div class="title-container relative inline-block">
-        <!-- Glowing Lines -->
+        <!-- Glowing Lines
         <div class="title-line left"></div>
-        <div class="title-line right"></div>
+        <div class="title-line right"></div> -->
         
         <h2 class="text-5xl md:text-6xl font-bold text-white">
-            Certifications
+            {{ preferences.text('certificationsTitle') }}
         </h2>
       </div>
       
-      <div class="mt-6 flex items-center justify-center gap-4">
+      <!-- <div class="mt-6 flex items-center justify-center gap-4">
         <div class="h-px w-16 md:w-24 bg-gradient-to-r from-transparent to-cyan-500"></div>
         <div class="hex-icon">
           <svg class="w-6 h-6 text-cyan-400" fill="currentColor" viewBox="0 0 24 24">
@@ -29,10 +29,10 @@
           </svg>
         </div>
         <div class="h-px w-16 md:w-24 bg-gradient-to-l from-transparent to-purple-500"></div>
-      </div>
+      </div> -->
       
       <p class="text-gray-400 mt-6 text-lg max-w-2xl mx-auto">
-        Certifications that changed my career
+        {{ preferences.text('certificationsDescription') }}
       </p>
     </div>
 
@@ -79,7 +79,7 @@
               <!-- Footer -->
               <div class="card-footer">
                 <span class="view-credential">
-                  View Credential
+                  {{ preferences.text('viewCredential') }}
                   <svg class="w-4 h-4 inline ml-1 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
                   </svg>
@@ -105,7 +105,7 @@
             type="button"
           >
             <span class="button-content">
-              <span class="button-text">Ver Mais</span>
+              <span class="button-text">{{ preferences.text('showMore') }}</span>
               <svg class="button-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
               </svg>
@@ -122,7 +122,7 @@
             type="button"
           >
             <span class="button-content">
-              <span class="button-text">Ver Menos</span>
+              <span class="button-text">{{ preferences.text('showLess') }}</span>
               <svg class="button-icon rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
               </svg>

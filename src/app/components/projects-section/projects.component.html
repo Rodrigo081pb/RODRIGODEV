@@ -1,0 +1,157 @@
+﻿<section id="projects" class="w-full py-20 overflow-hidden">
+  <div class="container mx-auto px-4 md:px-8 lg:px-16">
+
+    <!-- Section Header -->
+    <div class="text-center mb-16">
+      <h2 class="text-5xl md:text-6xl font-bold text-white mb-4">Projects</h2>
+      
+      <p class="text-gray-400 mt-6 text-lg max-w-2xl mx-auto">
+        Things I built while learning, working and exploring ideas
+      </p>
+    </div>
+
+    <!-- Filter Tabs -->
+    <div class="flex items-center justify-center gap-2 mb-12 flex-wrap">
+      @for (filter of filters; track filter.value) {
+        <button
+          class="filter-btn"
+          [class.filter-btn--active]="activeFilter() === filter.value"
+          (click)="setFilter(filter.value)"
+        >
+          {{ filter.label }}
+        </button>
+      }
+    </div>
+
+    <!-- Featured Project -->
+    @if (featuredProject(); as featured) {
+      <div class="featured-card mb-10">
+        <div class="featured-inner">
+
+          <!-- Left: Info -->
+          <div class="featured-info">
+            <div class="flex items-center gap-3 mb-5">
+              <span class="category-badge" [class]="'category-badge category-badge--' + featured.category">
+                {{ getCategoryLabel(featured.category) }}
+              </span>
+              <span class="status-badge" [class]="'status-badge status-badge--' + featured.status">
+                {{ featured.status === 'in-progress' ? 'In Progress' : 'Completed' }}
+              </span>
+            </div>
+
+            <h3 class="text-3xl md:text-4xl font-bold text-white mb-2 leading-tight">
+              {{ featured.title }}
+            </h3>
+            <p class="text-gray-500 text-xs font-semibold uppercase tracking-widest mb-5">
+              {{ featured.subtitle }}
+            </p>
+            <p class="text-gray-300 leading-relaxed mb-7 text-base">{{ featured.description }}</p>
+
+            <div class="flex flex-wrap gap-2 mb-8">
+              @for (tech of featured.technologies; track tech) {
+                <span class="tech-pill" [class]="'tech-pill tech-pill--' + featured.category">{{ tech }}</span>
+              }
+            </div>
+
+            <div class="flex items-center gap-3 flex-wrap">
+              <a [href]="featured.githubUrl" target="_blank" rel="noopener noreferrer" class="project-link project-link--ghost">
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+                </svg>
+                GitHub
+              </a>
+              @if (featured.liveUrl) {
+                <a [href]="featured.liveUrl" target="_blank" rel="noopener noreferrer" class="project-link project-link--primary">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                  </svg>
+                  Live Demo
+                </a>
+              }
+            </div>
+          </div>
+
+          <!-- Right: Visual -->
+          <div class="featured-visual" [class]="'preview-area preview-area--' + featured.category">
+            <div class="preview-grid"></div>
+            <div class="preview-glow" [class]="'preview-glow preview-glow--' + featured.category"></div>
+            <span class="preview-number">0{{ featured.id }}</span>
+            <span class="preview-year">{{ featured.year }}</span>
+            <div class="preview-lines">
+              <span></span><span></span><span></span><span></span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    }
+
+    <!-- Projects Grid -->
+    <div class="projects-grid">
+      @for (project of filteredProjects(); track project.id; let i = $index) {
+        <article
+          class="project-card"
+          [style.animation-delay]="(i * 0.08) + 's'"
+        >
+          <!-- Preview Area -->
+          <div class="preview-area" [class]="'preview-area preview-area--' + project.category">
+            <div class="preview-grid"></div>
+            <div class="preview-glow" [class]="'preview-glow preview-glow--' + project.category"></div>
+            <span class="preview-number">0{{ project.id }}</span>
+            <span class="preview-year">{{ project.year }}</span>
+            <span class="preview-cat-badge" [class]="'preview-cat-badge preview-cat-badge--' + project.category">
+              {{ getCategoryLabel(project.category) }}
+            </span>
+          </div>
+
+          <!-- Card Body -->
+          <div class="card-body">
+            <div class="flex items-center justify-between mb-3">
+              <span class="status-badge" [class]="'status-badge status-badge--' + project.status">
+                {{ project.status === 'in-progress' ? 'In Progress' : 'Completed' }}
+              </span>
+              <span class="text-gray-600 text-xs font-mono">{{ project.year }}</span>
+            </div>
+
+            <h3 class="text-base font-bold text-white mb-1 leading-snug">{{ project.title }}</h3>
+            <p class="text-gray-600 text-xs font-semibold uppercase tracking-widest mb-3">{{ project.subtitle }}</p>
+            <p class="text-gray-400 text-sm leading-relaxed mb-5">{{ project.description }}</p>
+
+            <div class="flex flex-wrap gap-1.5 mb-5">
+              @for (tech of project.technologies.slice(0, 3); track tech) {
+                <span class="tech-pill tech-pill--sm" [class]="'tech-pill tech-pill--sm tech-pill--' + project.category">{{ tech }}</span>
+              }
+              @if (project.technologies.length > 3) {
+                <span class="tech-pill tech-pill--sm tech-pill--ghost">+{{ project.technologies.length - 3 }}</span>
+              }
+            </div>
+
+            <div class="card-footer">
+              <a [href]="project.githubUrl" target="_blank" rel="noopener noreferrer" class="link-icon" aria-label="GitHub repository">
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+                </svg>
+              </a>
+              @if (project.liveUrl) {
+                <a [href]="project.liveUrl" target="_blank" rel="noopener noreferrer" class="link-icon" aria-label="Live demo">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                  </svg>
+                </a>
+              }
+              <div class="accent-line" [class]="'accent-line accent-line--' + project.category"></div>
+            </div>
+          </div>
+        </article>
+      }
+    </div>
+
+    <!-- Empty State -->
+    @if (filteredProjects().length === 0 && !featuredProject()) {
+      <div class="py-20 text-center">
+        <p class="text-gray-600 text-sm tracking-wide">No projects in this category yet.</p>
+      </div>
+    }
+
+  </div>
+</section>

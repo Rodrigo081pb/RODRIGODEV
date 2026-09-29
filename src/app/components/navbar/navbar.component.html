@@ -1,19 +1,89 @@
-<nav class="navbar-gradient fixed top-0 left-0 right-0 z-50 backdrop-blur-md">
+﻿<nav class="navbar-gradient fixed top-0 left-0 right-0 z-50 backdrop-blur-md">
   <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
     <a class="flex items-center gap-3 text-2xl font-bold text-white tracking-tight hover:scale-105 transition-transform" href="#">
         <img src="/icon.png" alt="Logo" class="w-15 h-15">
     </a>
 
-    <!-- Botão Hamburger -->
-    <button 
-      (click)="toggleMenu()" 
-      class="hamburger-btn z-50"
-      [class.active]="isMenuOpen()"
-      aria-label="Menu">
-      <span class="line line-1"></span>
-      <span class="line line-2"></span>
-      <span class="line line-3"></span>
-    </button>
+    <div class="navbar-actions">
+      <div class="translator-control">
+        <button
+          type="button"
+          class="translator-btn"
+          (click)="toggleTranslator()"
+          [attr.aria-expanded]="isTranslatorOpen()"
+          [attr.aria-label]="preferences.text('preferences')"
+          [title]="preferences.text('preferences')">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M4 5h8M8 3v2m0 0c0 4-2 7-5 9m5-9c0 3 2 6 5 8M5 14l3 3 3-3M14 5h6m-3 0v14m-4-4h8" />
+          </svg>
+          <span>{{ preferences.language() === 'en' ? 'EN' : 'PT' }}</span>
+        </button>
+        <div class="translator-panel" [class.visible]="isTranslatorOpen()">
+          <div class="translator-panel-header">
+            <div>
+              <span class="translator-kicker">{{ preferences.text('preferences') }}</span>
+              <strong class="translator-title">{{ preferences.text('chooseLanguage') }}</strong>
+            </div>
+            <button
+              type="button"
+              class="panel-close"
+              (click)="closeTranslator()"
+              aria-label="Close language panel"
+              title="Close">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M6 6l12 12M18 6L6 18" />
+              </svg>
+            </button>
+          </div>
+          <div class="language-options" role="group" [attr.aria-label]="preferences.text('language')">
+            <button
+              type="button"
+              class="language-option"
+              [class.selected]="preferences.language() === 'en'"
+              [attr.aria-pressed]="preferences.language() === 'en'"
+              (click)="preferences.setLanguage('en')">
+              <span>EN</span>
+              <span>English</span>
+            </button>
+            <button
+              type="button"
+              class="language-option"
+              [class.selected]="preferences.language() === 'pt'"
+              [attr.aria-pressed]="preferences.language() === 'pt'"
+              (click)="preferences.setLanguage('pt')">
+              <span>PT</span>
+              <span>Portuguese</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <button
+        type="button"
+        class="theme-toggle-button"
+        (click)="preferences.toggleTheme()"
+        [attr.aria-pressed]="preferences.theme() === 'light'"
+        [attr.aria-label]="preferences.text('theme')"
+        [title]="preferences.text('theme')">
+        <span class="theme-toggle-label">
+          {{ preferences.theme() === 'dark' ? preferences.text('dark') : preferences.text('light') }}
+        </span>
+        <span class="theme-toggle-track" [class.light-active]="preferences.theme() === 'light'">
+          <span class="theme-toggle-knob"></span>
+        </span>
+      </button>
+
+      <button
+        type="button"
+        (click)="toggleMenu()"
+        class="hamburger-btn z-50"
+        [class.active]="isMenuOpen()"
+        aria-label="Menu">
+        <span class="line line-1"></span>
+        <span class="line line-2"></span>
+        <span class="line line-3"></span>
+      </button>
+    </div>
   </div>
 </nav>
 
@@ -25,19 +95,17 @@
   <div class="menu-content" (click)="$event.stopPropagation()">
     <nav class="menu-nav">
       <a href="#home" class="menu-item" (click)="closeMenu()">
-        <span class="menu-text">Home</span>
+        <span class="menu-text">{{ preferences.text('home') }}</span>
       </a>
       <a href="#about" class="menu-item" (click)="closeMenu()">
-        <span class="menu-text">About me</span>
+        <span class="menu-text">{{ preferences.text('about') }}</span>
       </a>
-      <a href="#projects" class="menu-item" (click)="closeMenu()">
-        <span class="menu-text">Projects</span>
-      </a>
+      <!-- Projects navigation is hidden until the portfolio has projects. -->
       <a href="#contact" class="menu-item" (click)="closeMenu()">
-        <span class="menu-text">Contact</span>
+        <span class="menu-text">{{ preferences.text('contact') }}</span>
       </a>
       <a href="#skills" class="menu-item" (click)="closeMenu()">
-        <span class="menu-text">Skills</span>
+        <span class="menu-text">{{ preferences.text('skills') }}</span>
       </a>
     </nav>
   </div>

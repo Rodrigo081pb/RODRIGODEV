@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+﻿import { Component, inject } from '@angular/core';
 import { CardComponent } from '../card-holographic/card.component';
+import { PortfolioPreferencesService } from '../../services/portfolio-preferences.service';
 
 @Component({
   selector: 'app-about-section',
@@ -8,4 +9,6 @@ import { CardComponent } from '../card-holographic/card.component';
   standalone: true,
   imports: [CardComponent],
 })
-export class AboutSectionComponent {}
+export class AboutSectionComponent {
+  readonly preferences = inject(PortfolioPreferencesService);
+}

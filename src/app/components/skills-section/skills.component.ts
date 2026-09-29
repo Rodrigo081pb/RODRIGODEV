@@ -1,5 +1,6 @@
-import { Component, signal, ElementRef, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
+﻿import { Component, signal, ElementRef, ViewChild, AfterViewInit, OnDestroy, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { PortfolioPreferencesService } from '../../services/portfolio-preferences.service';
 
 @Component({
   selector: 'app-skills',
@@ -9,6 +10,7 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./skills.component.css']
 })
 export class SkillsComponent implements AfterViewInit, OnDestroy {
+  readonly preferences = inject(PortfolioPreferencesService);
   @ViewChild('skillsTrack') skillsTrack!: ElementRef<HTMLDivElement>;
   @ViewChild('trackContainer') trackContainer!: ElementRef<HTMLDivElement>;
   
@@ -67,7 +69,7 @@ export class SkillsComponent implements AfterViewInit, OnDestroy {
   }
 
   onMouseDown(e: MouseEvent) {
-    // Prevenir seleção de texto
+    // Prevenir seleÃ§Ã£o de texto
     e.preventDefault();
     
     this.isDragging = true;
@@ -94,7 +96,7 @@ export class SkillsComponent implements AfterViewInit, OnDestroy {
     const walk = (x - this.startX) * 1.5;
     this.currentTransform = this.scrollLeft + walk;
     
-    // Atualizar posição imediatamente
+    // Atualizar posiÃ§Ã£o imediatamente
     if (this.skillsTrack) {
       this.skillsTrack.nativeElement.style.transform = `translateX(${this.currentTransform}px)`;
     }
@@ -109,7 +111,7 @@ export class SkillsComponent implements AfterViewInit, OnDestroy {
       this.trackContainer.nativeElement.style.cursor = 'grab';
     }
     
-    // Normalizar posição para loop
+    // Normalizar posiÃ§Ã£o para loop
     if (this.trackWidth > 0) {
       while (this.currentTransform > 0) {
         this.currentTransform -= this.trackWidth;
@@ -119,7 +121,7 @@ export class SkillsComponent implements AfterViewInit, OnDestroy {
       }
     }
     
-    // Resume animation após 2 segundos
+    // Resume animation apÃ³s 2 segundos
     if (this.resumeTimeout) {
       clearTimeout(this.resumeTimeout);
     }
@@ -135,7 +137,7 @@ export class SkillsComponent implements AfterViewInit, OnDestroy {
   }
 
   onTouchStart(e: TouchEvent) {
-    // Prevenir scroll da página
+    // Prevenir scroll da pÃ¡gina
     if (e.cancelable) {
       e.preventDefault();
     }
@@ -162,7 +164,7 @@ export class SkillsComponent implements AfterViewInit, OnDestroy {
     const walk = (x - this.startX) * 1.5;
     this.currentTransform = this.scrollLeft + walk;
     
-    // Atualizar posição imediatamente
+    // Atualizar posiÃ§Ã£o imediatamente
     if (this.skillsTrack) {
       this.skillsTrack.nativeElement.style.transform = `translateX(${this.currentTransform}px)`;
     }
@@ -173,7 +175,7 @@ export class SkillsComponent implements AfterViewInit, OnDestroy {
     
     this.isDragging = false;
     
-    // Normalizar posição para loop
+    // Normalizar posiÃ§Ã£o para loop
     if (this.trackWidth > 0) {
       while (this.currentTransform > 0) {
         this.currentTransform -= this.trackWidth;
@@ -183,7 +185,7 @@ export class SkillsComponent implements AfterViewInit, OnDestroy {
       }
     }
     
-    // Resume animation após 2 segundos
+    // Resume animation apÃ³s 2 segundos
     if (this.resumeTimeout) {
       clearTimeout(this.resumeTimeout);
     }

@@ -1,5 +1,6 @@
-import { Component, signal } from '@angular/core';
+﻿import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { PortfolioPreferencesService } from '../../services/portfolio-preferences.service';
 
 @Component({
   selector: 'app-navbar',
@@ -9,7 +10,9 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent {
+  readonly preferences = inject(PortfolioPreferencesService);
   isMenuOpen = signal(false);
+  isTranslatorOpen = signal(false);
 
   toggleMenu() {
     this.isMenuOpen.set(!this.isMenuOpen());
@@ -17,5 +20,13 @@ export class NavbarComponent {
 
   closeMenu() {
     this.isMenuOpen.set(false);
+  }
+
+  toggleTranslator() {
+    this.isTranslatorOpen.set(!this.isTranslatorOpen());
+  }
+
+  closeTranslator() {
+    this.isTranslatorOpen.set(false);
   }
 }

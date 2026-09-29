@@ -1,5 +1,6 @@
-import { Component, signal } from '@angular/core';
+﻿import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { PortfolioPreferencesService } from '../../services/portfolio-preferences.service';
 
 interface Certification {
   id: number;
@@ -16,6 +17,7 @@ interface Certification {
   styleUrl: './certifications-section.css',
 })
 export class CertificationsSection {
+  readonly preferences = inject(PortfolioPreferencesService);
   certifications = signal<Certification[]>([
     {
       id: 1,
@@ -110,26 +112,26 @@ export class CertificationsSection {
     }
   ]);
 
-  // Controle de paginação
+  // Controle de paginaÃ§Ã£o
   itemsPerPage = 3;
   visibleItems = signal<number>(3);
 
-  // Certificações visíveis baseado na paginação
+  // CertificaÃ§Ãµes visÃ­veis baseado na paginaÃ§Ã£o
   get visibleCertifications() {
     return this.certifications().slice(0, this.visibleItems());
   }
 
-  // Verifica se há mais certificações para mostrar
+  // Verifica se hÃ¡ mais certificaÃ§Ãµes para mostrar
   get hasMore(): boolean {
     return this.visibleItems() < this.certifications().length;
   }
 
-  // Verifica se está no estado expandido
+  // Verifica se estÃ¡ no estado expandido
   get isExpanded(): boolean {
     return this.visibleItems() > this.itemsPerPage;
   }
 
-  // Mostra mais certificações
+  // Mostra mais certificaÃ§Ãµes
   showMore(): void {
     const newCount = Math.min(
       this.visibleItems() + this.itemsPerPage,
@@ -138,7 +140,7 @@ export class CertificationsSection {
     this.visibleItems.set(newCount);
   }
 
-  // Mostra menos certificações (volta ao estado inicial)
+  // Mostra menos certificaÃ§Ãµes (volta ao estado inicial)
   showLess(): void {
     this.visibleItems.set(this.itemsPerPage);
   }

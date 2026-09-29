@@ -1,19 +1,22 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+﻿import { Component, ChangeDetectorRef, effect, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SkillsComponent } from '../../components/skills-section/skills.component';
 import { ExperienceComponent } from '../../components/experience-section/experience.component';
 import { AboutSectionComponent } from '../../components/about-section/about-section.component';
 import { CertificationsSection } from '../../components/certifications-section/certifications-section';
+import { FooterComponent } from '../../components/footer/footer.component';
+import { PortfolioPreferencesService } from '../../services/portfolio-preferences.service';
 
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, SkillsComponent, ExperienceComponent, AboutSectionComponent, CertificationsSection],
+  imports: [CommonModule, SkillsComponent, ExperienceComponent, AboutSectionComponent, CertificationsSection, FooterComponent],
   templateUrl: './home-section.html',
   styleUrls: ['./home-section.css']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent {
+  readonly preferences = inject(PortfolioPreferencesService);
   displayedGreeting = '';
   displayedRole = '';
   displayedLocation = '';
@@ -22,33 +25,51 @@ export class HomeComponent implements OnInit {
   private greeting = 'Hello,';
   private role = 'Full Stack Developer';
   private location = 'From Brasil';
+  private typingRun = 0;
 
-  constructor(private cdr: ChangeDetectorRef) {}
+  constructor(private cdr: ChangeDetectorRef) {
+    effect(() => {
+      this.preferences.language();
+      this.restartTypingAnimation();
+    });
+  }
 
-  ngOnInit() {
-    // Pequeno delay antes de começar a animação
+  private restartTypingAnimation() {
+    const run = ++this.typingRun;
+    this.displayedGreeting = '';
+    this.displayedRole = '';
+    this.displayedLocation = '';
+
     setTimeout(() => {
-      this.startTypingAnimation();
+      void this.startTypingAnimation(run);
     }, 500);
   }
 
-  private async startTypingAnimation() {
+  private async startTypingAnimation(run: number) {
     // Typing greeting
-    await this.typeText(this.greeting, 'greeting', 100);
+    await this.typeText(this.preferences.text('heroGreeting'), 'greeting', 100, run);
+    if (run !== this.typingRun) return;
     await this.delay(400);
     
     // Typing role
-    await this.typeText(this.role, 'role', 60);
+    await this.typeText(this.preferences.text('heroRole'), 'role', 60, run);
+    if (run !== this.typingRun) return;
     await this.delay(400);
     
     // Typing location
-    await this.typeText(this.location, 'location', 60);
+    await this.typeText(this.preferences.text('heroLocation'), 'location', 60, run);
   }
 
-  private typeText(text: string, field: 'greeting' | 'role' | 'location', speed: number): Promise<void> {
+  private typeText(text: string, field: 'greeting' | 'role' | 'location', speed: number, run: number): Promise<void> {
     return new Promise((resolve) => {
       let index = 0;
       const interval = setInterval(() => {
+        if (run !== this.typingRun) {
+          clearInterval(interval);
+          resolve();
+          return;
+        }
+
         if (index < text.length) {
           if (field === 'greeting') {
             this.displayedGreeting += text.charAt(index);
@@ -57,7 +78,7 @@ export class HomeComponent implements OnInit {
           } else {
             this.displayedLocation += text.charAt(index);
           }
-          this.cdr.detectChanges(); // Força o Angular a detectar mudanças
+          this.cdr.detectChanges(); // ForÃ§a o Angular a detectar mudanÃ§as
           index++;
         } else {
           clearInterval(interval);

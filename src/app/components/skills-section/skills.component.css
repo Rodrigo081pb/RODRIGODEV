@@ -1,4 +1,4 @@
-/* Horizontal Scrolling Animation */
+﻿/* Horizontal Scrolling Animation */
 @keyframes scroll-left {
   0% {
     transform: translateX(0);
